@@ -1,0 +1,13 @@
+{
+  "name": "stasis",
+  "version": "0.1.0",
+  "description": "bare-bones static site generator",
+  "main": "index.js",
+  "author": "Max Kreminski",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "~0.13.1",
+    "marked": "~0.3.2",
+    "mkdirp": "~0.3.5"
+  }
+}
