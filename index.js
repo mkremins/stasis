@@ -1,6 +1,7 @@
 #!/usr/bin/env/node
 
 var cheerio = require('cheerio'),
+    fm = require('front-matter'),
     fs = require('fs'),
     md = require('marked'),
     mkdirp = require('mkdirp'),
@@ -15,11 +16,12 @@ function spit(fpath, contents) {
 }
 
 function readPost(fpath) {
-  var markdown = slurp('posts/' + fpath);
+  var content = fm(slurp('posts/' + fpath));
   return {
-    name: path.basename(fpath, ".md"),
-    markdown: markdown,
-    html: md(markdown)
+    name: path.basename(fpath, '.md'),
+    attrs: content.attributes,
+    markdown: content.body,
+    html: md(content.body)
   };
 }
 
