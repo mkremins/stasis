@@ -48,6 +48,22 @@ function loadTemplates() {
   return templatesHash;
 }
 
+function renderListingItem(post) {
+  return '<h3><a href="' + post.name + '">' + post.attrs.title + '</a></h3>';
+}
+
+function renderListing(templates, posts) {
+  var template = templates['listing'];
+  if (!template) {
+    throw new Error('Missing template: ' + templateName);
+  }
+  var $body = template.$('body');
+  posts.map(renderListingItem).map(function(postInfo) {
+    $body.append(postInfo);
+  });
+  return template.$.html();
+}
+
 function renderPost(templates, post) {
   var templateName = post.attrs.template || 'default';
   var template = templates[templateName];
@@ -70,6 +86,7 @@ function main() {
     mkdirp.sync(path.dirname(outPath));
     spit(outPath, renderPost(templates, post));
   }
+  spit(path.join(outputDir, 'index.html'), renderListing(templates, posts));
   console.log('\nRendering complete.');
 }
 
